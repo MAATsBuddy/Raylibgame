@@ -1,0 +1,52 @@
+        // rainBack
+        for (int i = 0; i < 10; i++) {
+            int randx = rand() % 790 + 10;
+            int randy = rand() % 620 - 10;
+            DrawLineEx((Vector2){randx, randy}, (Vector2){randx, randy + 40},
+                       2.0, SKYBLUE);
+        }
+        
+        // tail
+        DrawEllipse(300, 600, 90.0f, 80.0f, WHITE);
+        DrawEllipse(240, 570, 50.0f, 30.0f, WHITE);
+        DrawEllipse(180, 600, 80.0f, 50.0f, WHITE);
+        // leg
+        DrawCircle(470, 600, 70, WHITE);
+        DrawCircle(470, 600, 55, BLUE);
+        DrawCircle(542, 598, 12, WHITE);
+        // body
+        DrawEllipse(400, 550, 70.0f, 250.0f, WHITE);
+        DrawRectangle(330, 350, 140, 200, WHITE);
+        DrawEllipse(400, 350, 70.0f, 50.0f, WHITE);
+        DrawEllipse(360, 320, 30.0f, 100.0f, WHITE);
+        DrawEllipse(440, 320, 30.0f, 100.0f, WHITE);
+        // face
+        DrawTriangle((Vector2){450, 400}, (Vector2){420, 400},
+                     (Vector2){435, 425}, BLACK);
+        DrawRectangle(443, 350, 12, 33, BLACK);
+        DrawRectangle(403, 350, 12, 33, BLACK);
+        // arm
+        DrawRectangle(465, 450, 120, 20, WHITE);
+        // spear
+        DrawRectangle(580, 300, 15, 350, BLACK);
+        DrawTriangle((Vector2){588, 210}, (Vector2){580, 300},
+                     (Vector2){595, 300}, BLACK);
+        // hand
+        DrawCircle(595, 460, 10, WHITE);
+        DrawRectangle(598, 450, 20, 20, BLUE);
+
+        // rainFront
+        for (int i = 0; i < 10; i++) {
+            int randx = rand() % 790 + 10;
+            int randy = rand() % 620 - 10;
+            DrawLineEx((Vector2){randx, randy}, (Vector2){randx, randy + 40},
+                       2.0, SKYBLUE);
+        }
+        int splash = rand() % 6;
+        for (int i = 0; i < splash; i++) {
+            int randx = rand() % 790 + 10;
+            DrawLineEx((Vector2){randx - 5, 595}, (Vector2){randx - 20, 585},
+                       2.0, SKYBLUE);
+            DrawLineEx((Vector2){randx + 5, 595}, (Vector2){randx + 20, 585},
+                       2.0, SKYBLUE);
+        }
