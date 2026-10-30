@@ -1,3 +1,35 @@
+#include "raylib.h"
+
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#include "resource_dir.h" // utility header for SearchAndSetResourceDir
+
+int main() {
+    // rand
+    srand(time(NULL));
+
+    // Tell the window to use vsync and work on high DPI displays
+    SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+
+    // Create the window and OpenGL context
+    InitWindow(800, 600, "Slugcat");
+
+    // set fps
+    SetTargetFPS(30);
+
+    // game loop
+    while (!WindowShouldClose()) // run the loop until the user presses ESCAPE
+    {
+
+        // drawing
+        BeginDrawing();
+
+        // Setup the back buffer for drawing (clear color and depth buffers)
+        ClearBackground(BLUE);
+
         // rainBack
         for (int i = 0; i < 10; i++) {
             int randx = rand() % 790 + 10;
@@ -5,7 +37,7 @@
             DrawLineEx((Vector2){randx, randy}, (Vector2){randx, randy + 40},
                        2.0, SKYBLUE);
         }
-        
+
         // tail
         DrawEllipse(300, 600, 90.0f, 80.0f, WHITE);
         DrawEllipse(240, 570, 50.0f, 30.0f, WHITE);
@@ -50,3 +82,13 @@
             DrawLineEx((Vector2){randx + 5, 595}, (Vector2){randx + 20, 585},
                        2.0, SKYBLUE);
         }
+
+        // end the frame and get ready for the next one  (display frame, poll
+        // input, etc...)
+        EndDrawing();
+    }
+
+    // destroy the window and cleanup the OpenGL context
+    CloseWindow();
+    return 0;
+}
