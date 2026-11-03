@@ -34,10 +34,10 @@ int main ()
 	SearchAndSetResourceDir("resources");
 
 	// Load a texture from the resources directory
-	Texture wabbit = LoadTexture("wabbit_alpha.png");
+	Texture Wulf = LoadTexture("WulfTemplate.png");
 
 	// Load music from the resources directory
-	Music music = LoadMusicStream("train.mp3");
+	Music music = LoadMusicStream("Train.mp3");
 
 	//set fps
 	SetTargetFPS(30);
@@ -89,83 +89,27 @@ int main ()
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(BLUE);
 
-		// //debug
-		// DrawText(TextFormat("test\n%.2f\n%.2f\n%.2f", crotchet, GetMusicTimeLength(music), GetMusicTimePlayed(music)),10,10,15,BLACK);
+		//debug
+		DrawText(TextFormat("test\n%.2f\n%.2f\n%.2f", crotchet, GetMusicTimeLength(music), GetMusicTimePlayed(music)),10,10,15,BLACK);
 
-		// // draw some text using the default font
-		// DrawText("Press H to hide/show mouse", 50,50,20,BLACK);
+		// draw some text using the default font
+		DrawText("Press H to hide/show mouse", 50,50,20,BLACK);
 
-		// // show time
-		// DrawText(TextFormat("%02.0f:%02d", GetMusicTimePlayed(music)/60, (int)GetMusicTimePlayed(music)%60), 650, 100, 20, BLACK);
+		// show time
+		DrawText(TextFormat("%02.0f:%02d", GetMusicTimePlayed(music)/60, (int)GetMusicTimePlayed(music)%60), 650, 100, 20, BLACK);
 
-		// //playtime
-		// DrawRectangle(200, 100, 400, 12, LIGHTGRAY);
-		// DrawRectangle(200, 100, (int)(percentPlayed*400.0f), 12, MAROON);
+		//playtime
+		DrawRectangle(200, 100, 400, 12, LIGHTGRAY);
+		DrawRectangle(200, 100, (int)(percentPlayed*400.0f), 12, MAROON);
 
-		// //draw circles
-		// for(int i=0;i<4;i++)
-		// {
-		// 	DrawCircle(200+(i*100), 400, 40, ballColor[i]);
-		// }
-
-		//rainBack
-		for(int i = 0; i<10; i++)
+		//draw circles
+		for(int i=0;i<4;i++)
 		{
-			int randx = rand() % 790 + 10;
-			int randy = rand() % 620 - 10;
-			DrawLineEx((Vector2){randx, randy}, (Vector2){randx, randy + 40}, 2.0, SKYBLUE);
-		}
-
-		//tail
-		DrawEllipse(300, 600, 90.0f, 80.0f, WHITE);
-		DrawEllipse(240, 570, 50.0f, 30.0f, WHITE);
-		DrawEllipse(180, 600, 80.0f, 50.0f, WHITE);
-		//leg
-		DrawCircle(470, 600, 70, WHITE);
-		DrawCircle(470, 600, 55, BLUE);
-		DrawCircle(542, 598, 12, WHITE);
-		//body
-		DrawEllipse(400, 550, 70.0f, 250.0f, WHITE);
-		DrawRectangle(330, 350, 140, 200, WHITE);
-		DrawEllipse(400, 350, 70.0f, 50.0f, WHITE);
-		DrawEllipse(360, 320, 30.0f, 100.0f, WHITE);
-		DrawEllipse(440, 320, 30.0f, 100.0f, WHITE);
-		//face
-		DrawTriangle((Vector2){450, 400},
-		(Vector2){420, 400},
-		(Vector2){435, 425},
-		BLACK);
-		DrawRectangle(443, 350, 12, 33, BLACK);
-		DrawRectangle(403, 350, 12, 33, BLACK);
-		//arm
-		DrawRectangle(465, 450, 120, 20, WHITE);
-		//spear
-		DrawRectangle(580, 300, 15, 350, BLACK);
-		DrawTriangle((Vector2){588, 210},
-		(Vector2){580, 300},
-		(Vector2){595, 300},
-		BLACK);
-		//hand
-		DrawCircle(595, 460, 10, WHITE);
-		DrawRectangle(598, 450, 20, 20, BLUE);
-
-		//rainFront
-		for(int i = 0; i<10; i++)
-		{
-			int randx = rand() % 790 + 10;
-			int randy = rand() % 620 - 10;
-			DrawLineEx((Vector2){randx, randy}, (Vector2){randx, randy + 40}, 2.0, SKYBLUE);
-		}
-		int splash = rand() % 6;
-		for(int i = 0; i<splash; i++)
-		{
-			int randx = rand() % 790 + 10;
-			DrawLineEx((Vector2){randx-5, 595}, (Vector2){randx-20, 585}, 2.0, SKYBLUE);
-			DrawLineEx((Vector2){randx+5, 595}, (Vector2){randx+20, 585}, 2.0, SKYBLUE);
+			DrawCircle(200+(i*100), 400, 40, ballColor[i]);
 		}
 
 		// draw our texture to the screen
-		DrawTextureV(wabbit, mousePos, WHITE);
+		DrawTextureV(Wulf, mousePos, WHITE);
 		
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
@@ -180,7 +124,7 @@ int main ()
 	CloseAudioDevice();
 
 	// unload our texture so it can be cleaned up
-	UnloadTexture(wabbit);
+	UnloadTexture(Wulf);
 
 	// destroy the window and cleanup the OpenGL context
 	CloseWindow();
