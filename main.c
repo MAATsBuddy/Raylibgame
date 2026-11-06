@@ -46,13 +46,19 @@ int main ()
 	Vector2 mousePos = { 100.0f, 100.0f };
 	Color ballColor[4] = {DARKBLUE, DARKBLUE, DARKBLUE, DARKBLUE};
     float percentPlayed = 0.0f;
+	float dt = GetFrameTime();
 
 	//Conductor
 	int bpm = 150;
 	float crotchet;
 	float songPos;
-	float offset = 0.2f;
+	float offset = 0.5f;
 	int beat = 0;
+	int lastBeat = 0;
+	bool nextBeat = false;
+
+	int response = 0;
+	float inputTimer = 0;
 
 	PlayMusicStream(music);
 	SetMusicPan(music, 0.0f);
@@ -65,7 +71,11 @@ int main ()
 	// game loop
 	while (!WindowShouldClose())
 	{
-		//update
+		//update -----------------------------------
+		dt = GetFrameTime();
+
+		if (inputTimer > 0) inputTimer -= dt;
+
 		if (IsKeyPressed(KEY_H))
         {
             if (IsCursorHidden()) ShowCursor();
@@ -80,18 +90,33 @@ int main ()
 		songPos = GetMusicTimePlayed(music) + offset;
 		beat = (int)(songPos/crotchet);
 
+		
+		if(lastBeat != beat){lastBeat = beat; nextBeat = true;}
+		else {nextBeat = false;}
+
 		//get mouse pos
 		mousePos = GetMousePosition();
 
-		// drawing
+		//input
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+			if(beat%8 == 7) {response = 1; inputTimer = crotchet*2;}
+			else {response = 2; inputTimer = crotchet;}
+		}
+		if(beat%8 == 0 && response != 1) {response = 2; inputTimer = crotchet;}
+		if(inputTimer < 0){
+			inputTimer = 0;
+			response = 0;
+		}
+
+		// drawing --------------------------------
 		BeginDrawing();
 
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(BLUE);
 
 		//debug
-		DrawText(TextFormat("test\ncrochet: %.2f\nlength: %.2f\nplayed: %.2f\nbeat: %d"
-							, crotchet, GetMusicTimeLength(music), GetMusicTimePlayed(music), beat),10,10,15,BLACK);
+		DrawText(TextFormat("test\ncrochet: %.2f\nlength: %.2f\nplayed: %.2f\nbeat: %d\ninput: %.2f"
+							, crotchet, GetMusicTimeLength(music), GetMusicTimePlayed(music), beat, inputTimer),10,10,15,BLACK);
 
 		// draw some text using the default font
 		DrawText("Press H to hide/show mouse", 300,50,20,BLACK);
@@ -104,13 +129,24 @@ int main ()
 		DrawRectangle(200, 100, (int)(percentPlayed*400.0f), 12, MAROON);
 
 		//draw circles
-		for(int i=1;i<5;i++)
+		for(int i=1;i<4;i++)
 		{	
 			if(beat%8 == i*2 || beat%8 == i*2-1) 
-				if(i == 4) ballColor[i] = YELLOW; 
-				else ballColor[i] = RED;
-			else ballColor[i] = DARKBLUE;
-			DrawCircle(150+(i*100), 400, 40, ballColor[i]);
+				DrawCircle(150+(i*100), 400, 40, ORANGE);
+			else DrawCircle(150+(i*100), 400, 40, DARKBLUE);
+			
+		}
+		switch (response)
+		{
+			case 0:
+				DrawCircle(550, 400, 40, DARKBLUE);
+				break;
+			case 1:
+				DrawCircle(550, 400, 40, YELLOW);
+				break;
+			case 2:
+				DrawCircle(550, 400, 40, RED);
+				break;
 		}
 
 		// draw our texture to the screen
