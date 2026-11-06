@@ -66,18 +66,23 @@ int main() {
         DrawCircle(x - 25, y + 3, 16, WHITE);
         DrawEllipse(x + 30, y - 20, 12.0f, 8.0f, BLACK);
 
-        DrawTriangle((Vector2){x - 20, y + 20}, (Vector2){x - 30, y + 15},
-                     (Vector2){x - 32, y + 45}, BLACK);
-
-        DrawTriangle((Vector2){x + 18, y + 15}, (Vector2){x + 8, y + 20},
-                     (Vector2){x + 22, y + 45}, BLACK);
-
         if (x > 300) {
             smokeframe = smokeframe + 1;
             DrawCircle(300 + smokeframe * 2, 490, 20 - smokeframe, GRAY);
             DrawCircle(300 - smokeframe * 2, 490, 20 - smokeframe, GRAY);
             DrawCircle(300 + smokeframe, 500, 20 - smokeframe * 0.5f, GRAY);
             DrawCircle(300 - smokeframe, 500, 20 - smokeframe * 0.5f, GRAY);
+            DrawTriangle((Vector2){x - 20, y + 20}, (Vector2){x - 30, y + 15},
+                         (Vector2){x - 52, y + 35}, BLACK);
+
+            DrawTriangle((Vector2){x + 18, y + 15}, (Vector2){x + 8, y + 20},
+                         (Vector2){x + 52, y + 35}, BLACK);
+        } else {
+            DrawTriangle((Vector2){x - 20, y + 20}, (Vector2){x - 30, y + 15},
+                         (Vector2){x - 32, y + 45}, BLACK);
+
+            DrawTriangle((Vector2){x + 18, y + 15}, (Vector2){x + 8, y + 20},
+                         (Vector2){x + 22, y + 45}, BLACK);
         }
 
         // // rainBack
