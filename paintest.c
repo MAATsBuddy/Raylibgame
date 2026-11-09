@@ -8,6 +8,7 @@ int main(void) {
     Color mosColor = BLACK;
     const float vel = 250.0f; /* px/s */
     bool placeDot = false;
+    bool mousePos = false;
 
     struct Ponto2D {
         int x;
@@ -16,27 +17,65 @@ int main(void) {
         Color cor;
     };
 
-    struct Ponto2D Tinta[42069];
+    struct Ponto2D Tinta[50000];
     int lastDot = 0;
+    int currentDot = 0;
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
 
         if (IsKeyDown(KEY_RIGHT)) {
             x += vel * dt;
-            placeDot = true;
         }
         if (IsKeyDown(KEY_LEFT)) {
             x -= vel * dt;
-            placeDot = true;
         }
         if (IsKeyDown(KEY_DOWN)) {
             y += vel * dt;
-            placeDot = true;
         }
         if (IsKeyDown(KEY_UP)) {
             y -= vel * dt;
+        }
+        if (IsKeyDown(KEY_SPACE) || IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
             placeDot = true;
+        }
+        if (IsKeyDown(KEY_ONE)) {
+            mosColor = BLACK;
+        }
+        if (IsKeyDown(KEY_TWO)) {
+            mosColor = WHITE;
+        }
+        if (IsKeyDown(KEY_THREE)) {
+            mosColor = BLUE;
+        }
+        if (IsKeyDown(KEY_FOUR)) {
+            mosColor = RED;
+        }
+        if (IsKeyDown(KEY_FIVE)) {
+            mosColor = GREEN;
+        }
+        if (IsKeyPressed(KEY_C)) {
+            lastDot = 0;
+        }
+        if (IsKeyPressed(KEY_H)) {
+            if (mousePos) {
+                mousePos = false;
+            } else {
+                mousePos = true;
+            }
+        }
+        if (mousePos) {
+            x = GetMousePosition().x;
+            y = GetMousePosition().y;
+        }
+        if (IsKeyDown(KEY_EQUAL)) {
+            size++;
+        }
+        if (IsKeyDown(KEY_MINUS)) {
+            size--;
+            if (size <= 0) {
+                size = 1;
+            }
         }
 
         if (placeDot) {
@@ -47,12 +86,29 @@ int main(void) {
             lastDot++;
         }
         placeDot = false;
+        currentDot = 0;
 
         BeginDrawing();
         ClearBackground(WHITE);
-        DrawCircle((int)x - size, (int)y - size, size, GREEN);
-        DrawCircle((int)x - size + 2, (int)y - size + 2, size - 2, WHITE);
-        DrawText(TextFormat("INK LEFT: %d/69420", lastDot), 300, 50, 20, BLACK);
+
+        while (currentDot != lastDot) {
+            DrawCircle(Tinta[currentDot].x, Tinta[currentDot].y,
+                       Tinta[currentDot].size, Tinta[currentDot].cor);
+            currentDot++;
+        }
+
+        DrawCircle((int)x, (int)y, size, mosColor);
+        if (mosColor.r == WHITE.r || mosColor.b == WHITE.b ||
+            mosColor.g == WHITE.g) {
+            DrawCircle((int)x, (int)y, size - 2, BLACK);
+        } else {
+            DrawCircle((int)x, (int)y, size - 2, WHITE);
+        }
+        DrawText(TextFormat("INK LEFT: %d/50000", lastDot), 20, 20, 20, BLACK);
+        DrawText("Seta para se mexer\nespaço/botão esquerdo para desenhar\n1-5 "
+                 "para cores (2 apaga)\nC - clear screen\n H - troca entre "
+                 "mouse ou teclado\n -/+ tamanho",
+                 20, 40, 20, BLACK);
 
         EndDrawing();
     }
